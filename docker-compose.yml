@@ -1,0 +1,25 @@
+---
+version: '3'
+
+services:
+
+  REPLACE-ME-WITH-FQDN:
+    build:
+      context:      ./server
+    image:          ssl-cert-test-server:latest
+    container_name: ssl-cert-test-server
+    ports:
+      - "8090:80"
+    volumes:
+        - ./server/config:/tmp/config
+        - ./server/html:/usr/share/nginx/html
+
+  client:
+    build:
+      context:      ./client
+    image:          ssl-cert-test-client:latest
+    container_name: ssl-cert-test-client
+    volumes:
+        - ./client/config:/tmp/config
+    links:
+      - REPLACE-ME-WITH-FQDN
